@@ -43,9 +43,35 @@ int	has_duplicates(int *numbers, int count)
 	int	j;
 
 	i = 0;
-	while (i )
+	while (i < count)
 	{
-		/* code */
+		j = i + 1;
+		while (j < count)
+		{
+			if (numbers[i] == numbers [j])
+				return (1);
+			j++;
+		}
+		i++;
 	}
-	
+	return (0);
+}
+
+int	is_sorted(t_stack *stack)
+{
+	while (stack && stack->next)
+	{
+		if (stack->value > stack->next->value)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}
+
+void	error_exit(t_stack **a, t_stack **b)
+{
+	write(2, "Error\n", 6);
+	free_stack(a);
+	free_stack(b);
+	exit(1);
 }
