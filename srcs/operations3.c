@@ -1,52 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations2.c                                      :+:      :+:    :+:   */
+/*   operations3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nayala <nayala@student.42madrid.com>       #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-30 11:05:24 by nayala            #+#    #+#             */
-/*   Updated: 2025-10-30 11:05:24 by nayala           ###   ########.fr       */
+/*   Created: 2025-10-30 11:38:46 by nayala            #+#    #+#             */
+/*   Updated: 2025-10-30 11:38:46 by nayala           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/push_swap.h"
 
-void	ra(t_stack **a, int print)
+void	rra(t_stack **a, int print)
 {
-	t_stack	*tmp;
 	t_stack	*last;
+	t_stack	*prev;
 
-	if (!*a || !(*a)->next)
+	if(!*a || !(*a)->next)
 		return ;
-	tmp = *a;
-	*a = (*a)->next;
-	last = get_last_node(*a);
-	tmp->next = NULL;
-	last->next = tmp;
+	last = *a;
+	while (last->next)
+	{
+		prev = last;
+		last = last->next;
+	}
+	prev->next = NULL;
+	last->next = *a;
+	*a = last;
 	if (print)
-		write(1, "ra\n", 3);
+		write(1, "rra\n", 4);
 }
 
-void	rb(t_stack **b, int print)
+void	rrb(t_stack **b, int print)
 {
-	t_stack	*tmp;
 	t_stack	*last;
+	t_stack	*prev;
 
-	if (!*b || !(*b)->next)
+	if(!*b || !(*b)->next)
 		return ;
-	tmp = *b;
-	*b = (*b)->next;
-	last = get_last_node(*b);
-	tmp->next = NULL;
-	last->next = tmp;
+	last = *b;
+	while (last->next)
+	{
+		prev = last;
+		last = last->next;
+	}
+	prev->next = NULL;
+	last->next = *b;
+	*b = last;
 	if (print)
-		write(1, "rb\n", 3);
+		write(1, "rrb\n", 4);
 }
 
-void	rr(t_stack **a, t_stack **b, int print)
+void	rrr(t_stack **a, t_stack **b, int print)
 {
-	ra(a, 0);
-	rb(b, 0);
+	rra(a, 0);
+	rrb(b, 0);
 	if (print)
-		write(1, "rr\n", 3);
+		write(1, "rrr\n", 4);
 }
