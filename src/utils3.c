@@ -55,3 +55,28 @@ void	rotate_to_top(t_stack **stack, int position, char stack_name)
 		rotate_backward(stack, size - position, stack_name);
 	}
 }
+
+int	process_arg(char *arg, int has_quoted_arg, int i, t_stack **stack)
+{
+	int	success;
+
+	if (ft_strchr(arg, ' '))
+	{
+		success = process_quoted_arg(arg, has_quoted_arg, i, stack);
+		if (!success)
+		{
+			stack_clear(stack);
+			return (0);
+		}
+	}
+	else
+	{
+		success = process_individual_arg(arg, has_quoted_arg, stack);
+		if (!success)
+		{
+			stack_clear(stack);
+			return (0);
+		}
+	}
+	return (1);
+}

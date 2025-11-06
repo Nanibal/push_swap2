@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nayala <nayala@student.42madrid.com>       #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-10-29 10:14:14 by nayala            #+#    #+#             */
-/*   Updated: 2025-10-29 10:14:14 by nayala           ###   ########.fr       */
+/*   Created: 2025-11-06 10:24:26 by nayala            #+#    #+#             */
+/*   Updated: 2025-11-06 10:24:26 by nayala           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/push_swap.h"
 
-static int	is_valid_number(char *str)
+int	is_valid_number(char *str)
 {
 	int	i;
 
@@ -26,10 +26,10 @@ static int	is_valid_number(char *str)
 			return (0);
 		i++;
 	}
-	return (i);
+	return (1);
 }
 
-static long	ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	long	result;
 	int		sign;
@@ -54,56 +54,57 @@ static long	ft_atol(const char *str)
 	return (result * sign);
 }
 
-t_stack	*parse_args(int argc, char **argv)
+int	process_number(char *num_str, t_stack **stack)
 {
-	t_stack	*stack;
 	long	num;
-	int		i;
+	t_stack	*new_node;
 
-	stack = NULL;
-	i = 1;
-	while (i < argc)
+	if (!is_valid_number(num_str))
+		return (0);
+	num = ft_atol(num_str);
+	if (num < INT_MIN || num > INT_MAX)
+		return (0);
+	new_node = stack_new((int)num);
+	if (!new_node)
+		return (0);
+	stack_add_back(stack, new_node);
+	return (1);
+}
+
+int	process_single_arg(char *arg, t_stack **stack)
+{
+	char	**numbers;
+	int		i;
+	int		success;
+
+	numbers = ft_split(arg, ' ');
+	if (!numbers)
+		return (0);
+	i = 0;
+	success = 1;
+	while (numbers[i] && success)
 	{
-		if (!is_valid_number(argv[i]))
-			return (NULL);
-		num = ft_atol(argv[i]);
-		if (num < INT_MIN || num > INT_MAX)
-			return (NULL);
-		stack_add_back(&stack, stack_new((int)num));
-		if (!stack)
-			return (NULL);
+		if (!process_number(numbers[i], stack))
+			success = 0;
 		i++;
 	}
-	return (stack);
+	ft_free_split(numbers);
+	return (success);
 }
 
-int	check_duplicates(t_stack *stack)
+int	process_normal_arg(char *arg, t_stack **stack)
 {
-	t_stack	*current;
-	t_stack	*runner;
+	long	num;
+	t_stack	*new_node;
 
-	current = stack;
-	while (current)
-	{
-		runner = current->next;
-		while (runner)
-		{
-			if (current->value == runner->value)
-				return (1);
-			runner = runner->next;
-		}
-		current = current->next;
-	}
-	return (0);
-}
-
-int	is_sorted(t_stack *stack)
-{
-	while (stack && stack->next)
-	{
-		if (stack->value > stack->next->value)
-			return (0);
-		stack = stack->next;
-	}
+	if (!is_valid_number(arg))
+		return (0);
+	num = ft_atol(arg);
+	if (num < INT_MIN || num > INT_MAX)
+		return (0);
+	new_node = stack_new((int)num);
+	if (!new_node)
+		return (0);
+	stack_add_back(stack, new_node);
 	return (1);
 }

@@ -27,6 +27,15 @@ typedef struct s_stack
 t_stack	*parse_args(int argc, char **argv);
 int		check_duplicates(t_stack *stack);
 int		is_sorted(t_stack *stack);
+int		is_valid_number(char *str);
+long	ft_atol(const char *str);
+int		process_number(char *num_str, t_stack **stack);
+int		process_single_arg(char *arg, t_stack **stack);
+int		process_normal_arg(char *arg, t_stack **stack);
+int		process_arg(char *arg, int has_quoted_arg, int i, t_stack **stack);
+int		process_quoted_arg(char *arg, int has_quoted_arg,
+		int i, t_stack **s);
+int		process_individual_arg(char *arg, int has_quoted_arg, t_stack **s);
 //STACK OPERATIONS
 t_stack	*stack_new(int value);
 void	stack_add_back(t_stack **stack, t_stack *new);
@@ -55,4 +64,5 @@ int		get_min_index(t_stack *stack);
 int		get_max_index(t_stack *stack);
 int		get_position(t_stack *stack, int index);
 void	rotate_to_top(t_stack **stack, int position, char stack_name);
+void	ft_free_split(char **split);
 #endif

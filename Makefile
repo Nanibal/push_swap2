@@ -19,7 +19,7 @@ SRCDIR = src
 OBJDIR = obj
 
 SRCS = main.c operations.c operations2.c operations3.c parsing.c \
-		sort_big.c sort_small.c utils.c utils2.c utils3.c
+		sort_big.c sort_small.c utils.c utils2.c utils3.c parsing2.c
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 LIBFT = libft/libft.a
